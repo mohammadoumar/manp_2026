@@ -56,7 +56,6 @@ We experiment with the following models:
 
 ```
 mdlt-er/
-├── main.py
 ├── pyproject.toml
 ├── datasets/
 │   ├── EmoComics35/                        # Target comics dataset splits and formatted JSONLs
