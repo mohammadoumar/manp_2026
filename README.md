@@ -6,8 +6,8 @@ This work proposes a sequential transfer learning framework for multimodal emoti
 # 🪜 Goals
 - Develop a sequential transfer learning framework for multimodal emotion recognition in comics that integrates multidisciplinary, multi-task, and multi-lingual adaptation within a unified training pipeline.
 - Enhance cross-modal representation quality by leveraging auxiliary supervision (fine art emotion datasets and visual question answering) to promote domain-invariant and semantically grounded affective features.
-- Evaluate cross-lingual and cross-cultural generalization through adaptation to Japanese manga, assessing robustness to linguistic and stylistic variation..
-- Analyze stage-wise and merged model configurations to quantify the cumulative impact of sequential transfer and determine its effectiveness across different vision–language architectures..
+- Evaluate cross-lingual and cross-cultural generalization through adaptation to Japanese manga, assessing robustness to linguistic and stylistic variation.
+- Analyze stage-wise and merged model configurations to quantify the cumulative impact of sequential transfer and determine its effectiveness across different vision–language architectures.
 
 <!-- ## Key Features
 - Multimodal input: images, OCR text, speech-bubble layouts, metadata.
@@ -52,6 +52,49 @@ We experiment with the following models:
 - Merged Model and Cross-Architecture Assessment: Evaluate merged models that integrate knowledge from multiple transfer stages, comparing them against stage-wise counterparts across different vision–language architectures to measure cumulative knowledge integration, robustness, and cross-domain effectiveness.
 
 
+# 🗂️ Project Structure
+
+```
+mdlt-er/
+├── main.py
+├── pyproject.toml
+├── datasets/
+│   ├── EmoComics35/                        # Target comics dataset splits and formatted JSONLs
+│   │   ├── emocomics35_pg_images_original.csv
+│   │   ├── llama3_vision_dataset_train.jsonl
+│   │   ├── llama3_vision_dataset_test.jsonl
+│   │   └── mllama_dataset.json
+│   ├── emoart5k/                           # EmoArt fine art annotations
+│   │   └── annotation.json
+│   └── json_datasets/                      # Unified JSONL splits for all datasets
+│       ├── emoart5k_llama_train.jsonl
+│       ├── emoart5k_llama_test.jsonl
+│       ├── llama3_vision_ds_train_lfc.jsonl
+│       ├── llama3_vision_ds_test_lfc.jsonl
+│       ├── mangavqa_train.jsonl
+│       └── verify.py
+├── cross-domain_transfer/                  # Multi-disciplinary transfer stage (EmoArt)
+│   ├── cross_domain_finetune.py
+│   └── cross_domain_inference.py
+├── multi-task_transfer/                    # Multi-task transfer stage (EMID)
+│   ├── multi-task_finetune.py
+│   └── multi-task_inference.py
+├── multi-lingual_transfer/                 # Multi-lingual transfer stage (MangaVQA)
+│   ├── multi-lingual_finetune.py
+│   └── multi-lingual_inference.py
+└── scripts/
+    ├── data_preparation/                   # Dataset preprocessing notebooks
+    │   ├── emoart_preparation.ipynb
+    │   ├── emid_preparation.ipynb
+    │   └── mangavqa_preparation.ipynb
+    ├── general/                            # Shared inference and post-processing utilities
+    │   ├── inference_v3.py
+    │   └── post_processing.py
+    └── load_merge/                         # Adapter loading and model merging scripts
+        ├── load_merge_llama.py
+        └── load_merge_qwen.py
+```
+
 # 📦 Requirements
 
 We use the following versions of the packages:
@@ -59,8 +102,8 @@ We use the following versions of the packages:
 ```
 accelerate>=1.12.0
 bitsandbytes>=0.49.1
-peft>=0.18.1"
-pillow>=12.1.1"
+peft>=0.18.1
+pillow>=12.1.1
 torch>=2.7.0
 transformers>=4.51.1
 unsloth==2026.2.1
